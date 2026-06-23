@@ -210,6 +210,7 @@ function generateMarkdown(data) {
 
 function generateHTML(data) {
   const { account, positions, openOrders, metrics, risk, health, readiness, pnl, date } = data;
+  const generatedAtISO = new Date().toISOString();
   const STARTING = 50000;
   const totalReturn = account.equity - STARTING;
   const totalReturnPct = (totalReturn / STARTING * 100).toFixed(2);
@@ -314,7 +315,28 @@ function generateHTML(data) {
 <body>
 
 <h1>Trading Performance Dashboard</h1>
-<div style="color:#555;font-size:11px;margin-bottom:16px">Updated: ${date} | Paper Trading Only | Auto-refreshes every 60s</div>
+<div id="updated-banner" style="background:#0d2818;border:1px solid #00e676;border-radius:6px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+  <div>
+    <div style="color:#00e676;font-size:13px;font-weight:bold" id="updated-local">Last updated: —</div>
+    <div style="color:#666;font-size:11px;margin-top:2px">Paper Trading Only | Page auto-refreshes every 60s</div>
+  </div>
+  <div style="color:#aaa;font-size:12px" id="updated-ago">—</div>
+</div>
+<script>
+  const generatedAt = new Date(${JSON.stringify(generatedAtISO)});
+  document.getElementById('updated-local').textContent =
+    'Last updated: ' + generatedAt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  function renderAgo() {
+    const mins = Math.round((Date.now() - generatedAt.getTime()) / 60000);
+    const el = document.getElementById('updated-ago');
+    if (!el) return;
+    if (mins < 1) el.textContent = 'just now';
+    else if (mins < 60) el.textContent = mins + ' min ago';
+    else el.textContent = Math.round(mins / 60) + ' hr ago';
+  }
+  renderAgo();
+  setInterval(renderAgo, 30000);
+</script>
 
 <!-- ACCOUNT OVERVIEW -->
 <h2>Account Overview</h2>
