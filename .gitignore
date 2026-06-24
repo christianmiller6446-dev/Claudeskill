@@ -13,6 +13,7 @@ trades-cover-letter/.next/
 .claude/trading/dashboard/logs/
 .claude/scheduled_tasks.lock
 .claude/settings.local.json
+dashboard-view/
 
 # OS
 .DS_Store

@@ -463,17 +463,25 @@ ${bdRows}
 </html>`;
 }
 
+// Google Drive does not sync dot-prefixed folders (e.g. ".claude"), so a
+// plain copy is also written here, directly under the project root, so it
+// actually reaches the cloud and is visible on phones via the Drive/Files app.
+const PUBLIC_DIR = path.join(__dirname, '..', '..', '..', 'dashboard-view');
+
 function save(data, date) {
   if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR, { recursive: true });
+  if (!fs.existsSync(PUBLIC_DIR)) fs.mkdirSync(PUBLIC_DIR, { recursive: true });
 
   const md   = generateMarkdown(data);
   const html = generateHTML(data);
 
   fs.writeFileSync(path.join(LOG_DIR, 'dashboard.md'),   md,   'utf8');
   fs.writeFileSync(path.join(LOG_DIR, 'dashboard.html'), html, 'utf8');
+  fs.writeFileSync(path.join(PUBLIC_DIR, 'dashboard.html'), html, 'utf8');
 
   console.log(`  📄 dashboard.md saved`);
   console.log(`  🌐 dashboard.html saved`);
+  console.log(`  📱 dashboard-view/dashboard.html saved (synced copy for phone access)`);
 
   return { md, html };
 }
