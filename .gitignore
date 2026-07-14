@@ -13,7 +13,8 @@ trades-cover-letter/.next/
 .claude/trading/dashboard/logs/
 .claude/scheduled_tasks.lock
 .claude/settings.local.json
-dashboard-view/
+# dashboard-view/ is intentionally NOT ignored — it gets committed and
+# served via GitHub Pages so the dashboard is accessible from any browser.
 
 # OS
 .DS_Store
