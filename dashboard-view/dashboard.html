@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="60">
+<title>Trading Dashboard — 2026-07-14 13:47:05 UTC</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;padding:20px;font-size:13px}
+  h1{color:#fff;font-size:18px;margin-bottom:4px}
+  h2{color:#90caf9;font-size:14px;margin:24px 0 8px;border-bottom:1px solid #222;padding-bottom:4px}
+  h3{color:#aaa;font-size:12px;margin:12px 0 6px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:8px}
+  .card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px;padding:12px}
+  .card .label{color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+  .card .value{font-size:18px;font-weight:bold;margin-top:4px}
+  .green{color:#00e676} .red{color:#ff5252} .yellow{color:#ffeb3b} .orange{color:#ff9800}
+  table{width:100%;border-collapse:collapse;margin-bottom:16px}
+  th{background:#1e1e1e;color:#90caf9;padding:6px 10px;text-align:left;font-size:11px}
+  td{padding:5px 10px;border-bottom:1px solid #1a1a1a;font-size:12px}
+  tr:hover td{background:#161616}
+  .tag{display:inline-block;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:bold}
+  .tag-stop{background:#1a237e;color:#90caf9}
+  .tag-ladder{background:#1b5e20;color:#69f0ae}
+  .tag-buy{background:#1b5e20;color:#a5d6a7}
+  .tag-sell{background:#4e0000;color:#ef9a9a}
+  .score-ring{display:flex;align-items:center;gap:20px;margin:12px 0}
+  .score-num{font-size:48px;font-weight:bold}
+  .score-label{font-size:16px;margin-top:4px}
+  .progress{height:8px;background:#222;border-radius:4px;overflow:hidden;margin:4px 0}
+  .progress-fill{height:100%;border-radius:4px;transition:width .3s}
+  .mini-bar{height:6px;background:#222;border-radius:3px;overflow:hidden;width:80px}
+  .mini-bar div{height:100%;border-radius:3px}
+  .warn-box{background:#1a1a00;border:1px solid #ff9800;border-radius:4px;padding:8px 12px;margin:8px 0;font-size:12px;color:#ffeb3b}
+  .err-box{background:#1a0000;border:1px solid #ff5252;border-radius:4px;padding:8px 12px;margin:8px 0;font-size:12px;color:#ff5252}
+  .footer{margin-top:20px;color:#444;font-size:11px;border-top:1px solid #222;padding-top:8px}
+  .refresh-note{color:#555;font-size:10px;margin-top:4px}
+</style>
+</head>
+<body>
+
+<h1>Trading Performance Dashboard</h1>
+<div id="updated-banner" style="background:#0d2818;border:1px solid #00e676;border-radius:6px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+  <div>
+    <div style="color:#00e676;font-size:13px;font-weight:bold" id="updated-local">Last updated: —</div>
+    <div style="color:#666;font-size:11px;margin-top:2px">Paper Trading Only | Page auto-refreshes every 60s</div>
+  </div>
+  <div style="color:#aaa;font-size:12px" id="updated-ago">—</div>
+</div>
+<script>
+  const generatedAt = new Date("2026-07-14T13:47:06.091Z");
+  document.getElementById('updated-local').textContent =
+    'Last updated: ' + generatedAt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  function renderAgo() {
+    const mins = Math.round((Date.now() - generatedAt.getTime()) / 60000);
+    const el = document.getElementById('updated-ago');
+    if (!el) return;
+    if (mins < 1) el.textContent = 'just now';
+    else if (mins < 60) el.textContent = mins + ' min ago';
+    else el.textContent = Math.round(mins / 60) + ' hr ago';
+  }
+  renderAgo();
+  setInterval(renderAgo, 30000);
+</script>
+
+<!-- ACCOUNT OVERVIEW -->
+<h2>Account Overview</h2>
+<div class="grid">
+  <div class="card"><div class="label">Equity</div><div class="value">$50,032.85</div></div>
+  <div class="card"><div class="label">Cash</div><div class="value">$36,467.01</div></div>
+  <div class="card"><div class="label">Total Return</div><div class="value" style="color:#00e676">+$32.85 (0.07%)</div></div>
+  <div class="card"><div class="label">Daily P&L</div><div class="value" style="color:#ff5252">-$163.45</div></div>
+  <div class="card"><div class="label">Weekly P&L</div><div class="value" style="color:#00e676">+$350.20</div></div>
+  <div class="card"><div class="label">Monthly P&L</div><div class="value" style="color:#00e676">+$98.41</div></div>
+  <div class="card"><div class="label">Unrealized P&L</div><div class="value" style="color:#00e676">+$415.38</div></div>
+  <div class="card"><div class="label">Realized P&L</div><div class="value" style="color:#ff5252">-$384.65</div></div>
+</div>
+
+<!-- POSITIONS -->
+<h2>Open Positions</h2>
+<table>
+<tr><th>Symbol</th><th>Shares</th><th>Avg Entry</th><th>Current</th><th>Mkt Value</th><th>Unreal P&L</th><th>Stop</th><th>Risk%</th></tr>
+<tr>
+      <td><b>AAPL</b></td>
+      <td>16</td>
+      <td>$308.45</td>
+      <td>$314.75</td>
+      <td>$5036.00</td>
+      <td style="color:#00e676">+$100.80 (2.04%)</td>
+      <td><span style="color:#ff5252">⚠️ 16 uncovered</span></td>
+      <td>42%</td>
+    </tr><tr>
+      <td><b>AVGO</b></td>
+      <td>10</td>
+      <td>$397.22</td>
+      <td>$389.56</td>
+      <td>$3895.60</td>
+      <td style="color:#ff5252">-$76.58 (-1.93%)</td>
+      <td><span style="color:#ff5252">⚠️ 10 uncovered</span></td>
+      <td>33%</td>
+    </tr><tr>
+      <td><b>META</b></td>
+      <td>7</td>
+      <td>$605.84</td>
+      <td>$661.72</td>
+      <td>$4632.04</td>
+      <td style="color:#00e676">+$391.16 (9.22%)</td>
+      <td><span style="color:#ff5252">⚠️ 7 uncovered</span></td>
+      <td>39%</td>
+    </tr>
+</table>
+
+<!-- OPEN ORDERS -->
+<h2>Open Orders</h2>
+<table>
+<tr><th>Type</th><th>Symbol</th><th>Qty</th><th>Price</th><th>Status</th><th>Created</th></tr>
+<tr>
+      <td><span class="tag tag-ladder">LADDER</span></td>
+      <td><b>AMD</b></td>
+      <td>20</td>
+      <td>$405.86</td>
+      <td>new</td>
+      <td>2026-06-16</td>
+    </tr><tr>
+      <td><span class="tag tag-ladder">LADDER</span></td>
+      <td><b>AMD</b></td>
+      <td>10</td>
+      <td>$355.12</td>
+      <td>new</td>
+      <td>2026-06-16</td>
+    </tr><tr>
+      <td><span class="tag tag-ladder">LADDER</span></td>
+      <td><b>NVDA</b></td>
+      <td>10</td>
+      <td>$160.35</td>
+      <td>new</td>
+      <td>2026-05-30</td>
+    </tr><tr>
+      <td><span class="tag tag-ladder">LADDER</span></td>
+      <td><b>NVDA</b></td>
+      <td>20</td>
+      <td>$183.26</td>
+      <td>new</td>
+      <td>2026-05-30</td>
+    </tr>
+</table>
+
+<!-- STRATEGY PERFORMANCE -->
+<h2>Strategy Performance</h2>
+<div class="grid">
+  <div class="card"><div class="label">Total Trades</div><div class="value">3</div></div>
+  <div class="card"><div class="label">Win Rate</div><div class="value red">0%</div></div>
+  <div class="card"><div class="label">Profit Factor</div><div class="value red">0</div></div>
+  <div class="card"><div class="label">Expectancy</div><div class="value" style="color:#ff5252">-$128.22</div></div>
+  <div class="card"><div class="label">Avg Winner</div><div class="value green">—</div></div>
+  <div class="card"><div class="label">Avg Loser</div><div class="value red">-$128.22</div></div>
+  <div class="card"><div class="label">Max Drawdown</div><div class="value green">1.23%</div></div>
+  <div class="card"><div class="label">Sharpe Ratio</div><div class="value">0.28</div></div>
+  <div class="card"><div class="label">Largest Winner</div><div class="value green">—</div></div>
+  <div class="card"><div class="label">Largest Loser</div><div class="value red">-$237.24</div></div>
+  <div class="card"><div class="label">R/R Ratio</div><div class="value">0:1</div></div>
+  <div class="card"><div class="label">Avg Hold Time</div><div class="value">442.1h</div></div>
+</div>
+
+<!-- RISK MANAGEMENT -->
+<h2>Risk Management</h2>
+<div class="grid">
+  <div class="card">
+    <div class="label">Daily Loss Limit</div>
+    <div class="value">$1434.3</div>
+    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:11.395802830649096%;background:#ff9800"></div></div>
+    <div style="color:#888;font-size:11px">$1270.85 remaining</div>
+  </div>
+  <div class="card">
+    <div class="label">Weekly Loss Limit</div>
+    <div class="value">$2868.6</div>
+    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:0%;background:#ff9800"></div></div>
+    <div style="color:#888;font-size:11px">$2868.6 remaining</div>
+  </div>
+  <div class="card">
+    <div class="label">Stop Coverage</div>
+    <div class="value red">0%</div>
+    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:0%;background:#ff5252"></div></div>
+  </div>
+  <div class="card">
+    <div class="label">Margin Used</div>
+    <div class="value green">$0</div>
+    <div style="color:#888;font-size:11px">Cash only ✅</div>
+  </div>
+</div>
+
+<div style="margin:6px 0">
+  <span style="color:#aaa;font-size:12px">AAPL allocation: </span>
+  <span style="color:#00e676">10.5% ($5036) / 25% cap</span>
+  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:10.5%;background:#00e676"></div></div>
+</div>
+<div style="margin:6px 0">
+  <span style="color:#aaa;font-size:12px">AVGO allocation: </span>
+  <span style="color:#00e676">8.1% ($3895.6) / 25% cap</span>
+  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:8.1%;background:#00e676"></div></div>
+</div>
+<div style="margin:6px 0">
+  <span style="color:#aaa;font-size:12px">META allocation: </span>
+  <span style="color:#00e676">9.7% ($4632.04) / 25% cap</span>
+  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:9.7%;background:#00e676"></div></div>
+</div>
+<div class="warn-box">⚠️ AAPL has 16 unprotected shares</div><div class="warn-box">⚠️ AVGO has 10 unprotected shares</div><div class="warn-box">⚠️ META has 7 unprotected shares</div>
+
+<!-- AUTOMATION HEALTH -->
+<h2>Automation Health</h2>
+<div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+<table style="max-width:400px">
+<tr><th>Task</th><th>Status</th></tr>
+<tr><td>nvda-ladder-fill-watcher</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-loss-guardian</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-morning-check</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-midday-check</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-preclose-check</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-nightly-report</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>weekly-stock-scan</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>monday-watchlist</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>weekend-bot-update</td><td><span style="color:#00e676">✅</span></td></tr>
+</table>
+<div>
+  <div class="card" style="min-width:200px">
+    <div class="label">Scheduler Health</div>
+    <div class="value green">100/100</div>
+  </div>
+  <div style="margin-top:8px;font-size:12px;color:#888">API Errors Today: <span style="color:#00e676">0</span></div>
+  <div style="font-size:12px;color:#888">Last Scan: none</div>
+  
+</div>
+</div>
+
+<!-- READINESS SCORE -->
+<h2>Live Trading Readiness</h2>
+<div style="display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start">
+<div class="score-ring">
+  <div>
+    <div class="score-num" style="color:#ffeb3b">60</div>
+    <div style="color:#555">/ 100</div>
+  </div>
+  <div>
+    <div class="score-label" style="color:#ffeb3b">Controlled Live Test Eligible</div>
+    <div class="progress" style="width:200px;margin-top:8px"><div class="progress-fill" style="width:60%;background:#ffeb3b"></div></div>
+    <div style="font-size:11px;color:#555;margin-top:4px">Infra: 30/30 | Risk: 20/30 | Strategy: 10/40</div>
+  </div>
+</div>
+<table style="max-width:500px">
+<tr><th>Category</th><th>Score</th><th>Bar</th><th>Note</th></tr>
+<tr>
+      <td style="font-size:12px">schedulerReliability</td>
+      <td>10/10</td>
+      <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
+      <td style="font-size:11px;color:#aaa">9/9 tasks registered</td>
+    </tr><tr>
+      <td style="font-size:12px">apiReliability</td>
+      <td>10/10</td>
+      <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
+      <td style="font-size:11px;color:#aaa">0 API errors today</td>
+    </tr><tr>
+      <td style="font-size:12px">logging</td>
+      <td>10/10</td>
+      <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
+      <td style="font-size:11px;color:#aaa">19 days of portfolio history</td>
+    </tr><tr>
+      <td style="font-size:12px">stopCoverage</td>
+      <td>0/10</td>
+      <td><div class="mini-bar"><div style="width:0%;background:#ff5252"></div></div></td>
+      <td style="font-size:11px;color:#aaa">0% of shares protected</td>
+    </tr><tr>
+      <td style="font-size:12px">allocationControl</td>
+      <td>10/10</td>
+      <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
+      <td style="font-size:11px;color:#aaa">All positions within 25% cap</td>
+    </tr><tr>
+      <td style="font-size:12px">lossLimits</td>
+      <td>10/10</td>
+      <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
+      <td style="font-size:11px;color:#aaa">Daily remaining: $1270.85 | Weekly: $2868.6</td>
+    </tr><tr>
+      <td style="font-size:12px">completedTrades</td>
+      <td>0/10</td>
+      <td><div class="mini-bar"><div style="width:0%;background:#ff5252"></div></div></td>
+      <td style="font-size:11px;color:#aaa">3 closed trades</td>
+    </tr><tr>
+      <td style="font-size:12px">profitFactor</td>
+      <td>0/10</td>
+      <td><div class="mini-bar"><div style="width:0%;background:#ff5252"></div></div></td>
+      <td style="font-size:11px;color:#aaa">Profit factor: 0</td>
+    </tr><tr>
+      <td style="font-size:12px">winRate</td>
+      <td>0/10</td>
+      <td><div class="mini-bar"><div style="width:0%;background:#ff5252"></div></div></td>
+      <td style="font-size:11px;color:#aaa">Win rate: 0%</td>
+    </tr><tr>
+      <td style="font-size:12px">drawdown</td>
+      <td>10/10</td>
+      <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
+      <td style="font-size:11px;color:#aaa">Max drawdown: 1.23%</td>
+    </tr>
+</table>
+</div>
+
+<div class="footer">
+  ⛔ PAPER TRADING ONLY — No orders placed by this dashboard. All trades require user approval.
+  <div class="refresh-note">Page auto-refreshes every 60 seconds.</div>
+</div>
+
+</body>
+</html>
