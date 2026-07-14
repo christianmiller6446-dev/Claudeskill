@@ -36,6 +36,27 @@ async function placeOrder({ symbol, side, qty, type, limitPrice, trailPercent, t
   });
 }
 
+// Place a bracket order — one limit buy entry with a take-profit limit sell
+// and a stop-loss sell attached. Alpaca cancels the remaining leg automatically
+// when one fills. This is the primary entry method for the auto-trade strategy.
+async function placeBracketOrder({ symbol, qty, limitPrice, takeProfitPrice, stopLossPrice }) {
+  const payload = {
+    symbol,
+    qty:            String(qty),
+    side:           'buy',
+    type:           'limit',
+    time_in_force:  'gtc',
+    order_class:    'bracket',
+    limit_price:    String(limitPrice.toFixed(2)),
+    take_profit:    { limit_price: String(takeProfitPrice.toFixed(2)) },
+    stop_loss:      { stop_price:  String(stopLossPrice.toFixed(2)) }
+  };
+  return apiFetch(`${PAPER_URL}/orders`, {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+}
+
 // Cancel a single order by ID
 async function cancelOrder(orderId) {
   const res = await fetch(`${PAPER_URL}/orders/${orderId}`, {
@@ -84,4 +105,4 @@ async function ensureTrailingStop(symbol, trailPercent = 10) {
   return placeOrder({ symbol, side: 'sell', qty: uncovered, type: 'trailing_stop', trailPercent });
 }
 
-module.exports = { placeOrder, cancelOrder, getOpenOrders, getPositions, getAccount, ensureTrailingStop };
+module.exports = { placeOrder, placeBracketOrder, cancelOrder, getOpenOrders, getPositions, getAccount, ensureTrailingStop };

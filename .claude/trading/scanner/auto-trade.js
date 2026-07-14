@@ -4,28 +4,27 @@
 //
 // Rules encoded from strategy:
 //   • Market gate must be open (SPY + QQQ above 50 MA)
-//   • Stock must score >= 60 / 100
+//   • Stock must score >= 50 / 100
 //   • Must be above both MA20 and MA50
 //   • Not overextended (>15% 5d gain) unless R/R >= 3:1
 //   • Max 1% equity risk per position, 10% max allocation cap
 //   • Skip symbols already in a position or with an open buy order
-//   • Max 2 new entries per run to avoid over-trading
-//   • Immediately places a 10% trailing stop after each limit buy is confirmed
-//     (if it fills during this run); persistent stop coverage handled by fill-watcher
+//   • Max 2 new entries per run
+//   • Uses BRACKET orders: limit buy + take-profit limit sell + stop-loss
+//     all submitted together — Alpaca auto-cancels the other leg on fill
 
 require('../env');
 
 const { getBars, getSnapshots, getAccount, WATCHLIST } = require('./data.js');
 const { scoreStock, rankAll, setQQQ5d }                = require('./rank.js');
 const { marketHealthCheck, stockFilters }               = require('./filters.js');
-const { placeOrder, getOpenOrders, getPositions }       = require('../trader.js');
+const { placeBracketOrder, getOpenOrders, getPositions } = require('../trader.js');
 const fs   = require('fs');
 const path = require('path');
 
 const LOG_DIR  = path.join(__dirname, 'logs');
 const LOG_FILE = path.join(LOG_DIR, 'auto-trade-log.json');
-const MIN_SCORE       = 60;   // minimum composite score to enter
-const TRAIL_PCT       = 10;   // trailing stop percent
+const MIN_SCORE       = 50;   // minimum composite score to enter
 const MAX_NEW_ENTRIES = 2;    // max new positions per run
 
 if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR, { recursive: true });
@@ -128,39 +127,28 @@ async function run() {
     const { symbol, entry, stop, target, score } = stock;
     const { maxShares, dollarRisk, positionCost } = filter;
 
-    console.log(`\n🛒 Placing limit buy — ${symbol} x${maxShares} @ ${usd(entry)}`);
-    console.log(`   Score: ${score} | Stop: ${usd(stop)} | Target: ${usd(target)} | Risk: ${usd(dollarRisk)}`);
+    console.log(`\n🛒 Bracket order — ${symbol} x${maxShares}`);
+    console.log(`   Entry: ${usd(entry)} | Stop: ${usd(stop)} | Target: ${usd(target)} | Score: ${score} | Risk: ${usd(dollarRisk)}`);
 
     try {
-      const order = await placeOrder({
+      const order = await placeBracketOrder({
         symbol,
-        side:       'buy',
-        qty:        maxShares,
-        type:       'limit',
-        limitPrice: entry,
-        tif:        'gtc'
+        qty:             maxShares,
+        limitPrice:      entry,
+        takeProfitPrice: target,
+        stopLossPrice:   stop
       });
 
-      console.log(`   ✅ Order placed — ID: ${order.id} | Status: ${order.status}`);
+      console.log(`   ✅ Bracket placed — ID: ${order.id} | Status: ${order.status}`);
+      console.log(`   📈 Take profit @ ${usd(target)} | 🛡️  Stop loss @ ${usd(stop)}`);
 
-      // If it filled immediately (market order or crossed), place trailing stop now
-      if (order.status === 'filled') {
-        console.log(`   ⚡ Filled immediately — placing trailing stop...`);
-        const stop_order = await placeOrder({
-          symbol, side: 'sell', qty: maxShares,
-          type: 'trailing_stop', trailPercent: TRAIL_PCT
-        });
-        console.log(`   🛡️  Trailing stop placed — ID: ${stop_order.id}`);
-      } else {
-        console.log(`   ⏳ Limit order pending — fill-watcher will place trailing stop on fill`);
-      }
-
-      results.push({ symbol, action: 'BUY_PLACED', orderId: order.id, status: order.status,
-        qty: maxShares, limitPrice: entry, stop, target, score, dollarRisk, positionCost });
+      results.push({ symbol, action: 'BRACKET_PLACED', orderId: order.id, status: order.status,
+        qty: maxShares, limitPrice: entry, stop, target, score, dollarRisk, positionCost,
+        riskReward: stock.riskReward });
 
     } catch (err) {
-      console.error(`   ❌ Order failed for ${symbol}: ${err.message}`);
-      results.push({ symbol, action: 'BUY_FAILED', error: err.message, qty: maxShares, limitPrice: entry });
+      console.error(`   ❌ Bracket order failed for ${symbol}: ${err.message}`);
+      results.push({ symbol, action: 'BRACKET_FAILED', error: err.message, qty: maxShares, limitPrice: entry });
     }
   }
 
@@ -173,8 +161,8 @@ async function run() {
   console.log(`  AUTO-TRADE COMPLETE — ${new Date().toISOString().split('T')[0]}`);
   console.log(`${'═'.repeat(55)}`);
   results.forEach(r => {
-    const status = r.action === 'BUY_PLACED' ? '✅' : '❌';
-    console.log(`  ${status} ${r.symbol}: ${r.action} | ${r.qty} shares @ ${r.limitPrice ? usd(r.limitPrice) : '—'}`);
+    const status = r.action === 'BRACKET_PLACED' ? '✅' : '❌';
+    console.log(`  ${status} ${r.symbol}: ${r.action} | ${r.qty} shares @ ${r.limitPrice ? usd(r.limitPrice) : '—'} → target ${r.target ? usd(r.target) : '—'} | stop ${r.stop ? usd(r.stop) : '—'}`);
   });
   console.log(`  PAPER TRADING ONLY — no real money involved`);
   console.log(`${'═'.repeat(55)}\n`);
