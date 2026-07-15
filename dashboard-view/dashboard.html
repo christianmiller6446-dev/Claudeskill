@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="refresh" content="60">
-<title>Trading Dashboard — 2026-07-14 13:47:05 UTC</title>
+<title>Trading Dashboard — 2026-07-15 13:00:03 UTC</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;padding:20px;font-size:13px}
@@ -48,7 +48,7 @@
   <div style="color:#aaa;font-size:12px" id="updated-ago">—</div>
 </div>
 <script>
-  const generatedAt = new Date("2026-07-14T13:47:06.091Z");
+  const generatedAt = new Date("2026-07-15T13:00:04.978Z");
   document.getElementById('updated-local').textContent =
     'Last updated: ' + generatedAt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
   function renderAgo() {
@@ -66,13 +66,13 @@
 <!-- ACCOUNT OVERVIEW -->
 <h2>Account Overview</h2>
 <div class="grid">
-  <div class="card"><div class="label">Equity</div><div class="value">$50,032.85</div></div>
+  <div class="card"><div class="label">Equity</div><div class="value">$50,131.06</div></div>
   <div class="card"><div class="label">Cash</div><div class="value">$36,467.01</div></div>
-  <div class="card"><div class="label">Total Return</div><div class="value" style="color:#00e676">+$32.85 (0.07%)</div></div>
-  <div class="card"><div class="label">Daily P&L</div><div class="value" style="color:#ff5252">-$163.45</div></div>
-  <div class="card"><div class="label">Weekly P&L</div><div class="value" style="color:#00e676">+$350.20</div></div>
-  <div class="card"><div class="label">Monthly P&L</div><div class="value" style="color:#00e676">+$98.41</div></div>
-  <div class="card"><div class="label">Unrealized P&L</div><div class="value" style="color:#00e676">+$415.38</div></div>
+  <div class="card"><div class="label">Total Return</div><div class="value" style="color:#00e676">+$131.06 (0.26%)</div></div>
+  <div class="card"><div class="label">Daily P&L</div><div class="value" style="color:#00e676">+$149.48</div></div>
+  <div class="card"><div class="label">Weekly P&L</div><div class="value" style="color:#00e676">+$412.24</div></div>
+  <div class="card"><div class="label">Monthly P&L</div><div class="value" style="color:#00e676">+$196.62</div></div>
+  <div class="card"><div class="label">Unrealized P&L</div><div class="value" style="color:#00e676">+$515.79</div></div>
   <div class="card"><div class="label">Realized P&L</div><div class="value" style="color:#ff5252">-$384.65</div></div>
 </div>
 
@@ -84,28 +84,28 @@
       <td><b>AAPL</b></td>
       <td>16</td>
       <td>$308.45</td>
-      <td>$314.75</td>
-      <td>$5036.00</td>
-      <td style="color:#00e676">+$100.80 (2.04%)</td>
-      <td><span style="color:#ff5252">⚠️ 16 uncovered</span></td>
+      <td>$316.91</td>
+      <td>$5070.56</td>
+      <td style="color:#00e676">+$135.36 (2.74%)</td>
+      <td><span style="color:#00e676">✅ $290.29</span></td>
       <td>42%</td>
     </tr><tr>
       <td><b>AVGO</b></td>
       <td>10</td>
       <td>$397.22</td>
-      <td>$389.56</td>
-      <td>$3895.60</td>
-      <td style="color:#ff5252">-$76.58 (-1.93%)</td>
-      <td><span style="color:#ff5252">⚠️ 10 uncovered</span></td>
+      <td>$393.28</td>
+      <td>$3932.80</td>
+      <td style="color:#ff5252">-$39.38 (-0.99%)</td>
+      <td><span style="color:#00e676">✅ $359.73</span></td>
       <td>33%</td>
     </tr><tr>
       <td><b>META</b></td>
       <td>7</td>
       <td>$605.84</td>
-      <td>$661.72</td>
-      <td>$4632.04</td>
-      <td style="color:#00e676">+$391.16 (9.22%)</td>
-      <td><span style="color:#ff5252">⚠️ 7 uncovered</span></td>
+      <td>$665.81</td>
+      <td>$4660.69</td>
+      <td style="color:#00e676">+$419.81 (9.90%)</td>
+      <td><span style="color:#00e676">✅ $608.29</span></td>
       <td>39%</td>
     </tr>
 </table>
@@ -115,6 +115,27 @@
 <table>
 <tr><th>Type</th><th>Symbol</th><th>Qty</th><th>Price</th><th>Status</th><th>Created</th></tr>
 <tr>
+      <td><span class="tag tag-stop">STOP</span></td>
+      <td><b>AVGO</b></td>
+      <td>10</td>
+      <td>8% trail</td>
+      <td>new</td>
+      <td>2026-07-15</td>
+    </tr><tr>
+      <td><span class="tag tag-stop">STOP</span></td>
+      <td><b>META</b></td>
+      <td>7</td>
+      <td>8% trail</td>
+      <td>new</td>
+      <td>2026-07-15</td>
+    </tr><tr>
+      <td><span class="tag tag-stop">STOP</span></td>
+      <td><b>AAPL</b></td>
+      <td>16</td>
+      <td>8% trail</td>
+      <td>new</td>
+      <td>2026-07-15</td>
+    </tr><tr>
       <td><span class="tag tag-ladder">LADDER</span></td>
       <td><b>AMD</b></td>
       <td>20</td>
@@ -155,7 +176,7 @@
   <div class="card"><div class="label">Avg Winner</div><div class="value green">—</div></div>
   <div class="card"><div class="label">Avg Loser</div><div class="value red">-$128.22</div></div>
   <div class="card"><div class="label">Max Drawdown</div><div class="value green">1.23%</div></div>
-  <div class="card"><div class="label">Sharpe Ratio</div><div class="value">0.28</div></div>
+  <div class="card"><div class="label">Sharpe Ratio</div><div class="value">0.48</div></div>
   <div class="card"><div class="label">Largest Winner</div><div class="value green">—</div></div>
   <div class="card"><div class="label">Largest Loser</div><div class="value red">-$237.24</div></div>
   <div class="card"><div class="label">R/R Ratio</div><div class="value">0:1</div></div>
@@ -168,8 +189,8 @@
   <div class="card">
     <div class="label">Daily Loss Limit</div>
     <div class="value">$1434.3</div>
-    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:11.395802830649096%;background:#ff9800"></div></div>
-    <div style="color:#888;font-size:11px">$1270.85 remaining</div>
+    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:0%;background:#ff9800"></div></div>
+    <div style="color:#888;font-size:11px">$1434.3 remaining</div>
   </div>
   <div class="card">
     <div class="label">Weekly Loss Limit</div>
@@ -179,8 +200,8 @@
   </div>
   <div class="card">
     <div class="label">Stop Coverage</div>
-    <div class="value red">0%</div>
-    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:0%;background:#ff5252"></div></div>
+    <div class="value green">100%</div>
+    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:100%;background:#00e676"></div></div>
   </div>
   <div class="card">
     <div class="label">Margin Used</div>
@@ -191,20 +212,20 @@
 
 <div style="margin:6px 0">
   <span style="color:#aaa;font-size:12px">AAPL allocation: </span>
-  <span style="color:#00e676">10.5% ($5036) / 25% cap</span>
-  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:10.5%;background:#00e676"></div></div>
+  <span style="color:#00e676">10.6% ($5070.56) / 25% cap</span>
+  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:10.6%;background:#00e676"></div></div>
 </div>
 <div style="margin:6px 0">
   <span style="color:#aaa;font-size:12px">AVGO allocation: </span>
-  <span style="color:#00e676">8.1% ($3895.6) / 25% cap</span>
-  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:8.1%;background:#00e676"></div></div>
+  <span style="color:#00e676">8.2% ($3932.8) / 25% cap</span>
+  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:8.2%;background:#00e676"></div></div>
 </div>
 <div style="margin:6px 0">
   <span style="color:#aaa;font-size:12px">META allocation: </span>
-  <span style="color:#00e676">9.7% ($4632.04) / 25% cap</span>
+  <span style="color:#00e676">9.7% ($4660.69) / 25% cap</span>
   <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:9.7%;background:#00e676"></div></div>
 </div>
-<div class="warn-box">⚠️ AAPL has 16 unprotected shares</div><div class="warn-box">⚠️ AVGO has 10 unprotected shares</div><div class="warn-box">⚠️ META has 7 unprotected shares</div>
+
 
 <!-- AUTOMATION HEALTH -->
 <h2>Automation Health</h2>
@@ -229,13 +250,13 @@
 <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start">
 <div class="score-ring">
   <div>
-    <div class="score-num" style="color:#ffeb3b">60</div>
+    <div class="score-num" style="color:#ffeb3b">70</div>
     <div style="color:#555">/ 100</div>
   </div>
   <div>
     <div class="score-label" style="color:#ffeb3b">Controlled Live Test Eligible</div>
-    <div class="progress" style="width:200px;margin-top:8px"><div class="progress-fill" style="width:60%;background:#ffeb3b"></div></div>
-    <div style="font-size:11px;color:#555;margin-top:4px">Infra: 30/30 | Risk: 20/30 | Strategy: 10/40</div>
+    <div class="progress" style="width:200px;margin-top:8px"><div class="progress-fill" style="width:70%;background:#ffeb3b"></div></div>
+    <div style="font-size:11px;color:#555;margin-top:4px">Infra: 30/30 | Risk: 30/30 | Strategy: 10/40</div>
   </div>
 </div>
 <table style="max-width:500px">
@@ -254,12 +275,12 @@
       <td style="font-size:12px">logging</td>
       <td>10/10</td>
       <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
-      <td style="font-size:11px;color:#aaa">19 days of portfolio history</td>
+      <td style="font-size:11px;color:#aaa">20 days of portfolio history</td>
     </tr><tr>
       <td style="font-size:12px">stopCoverage</td>
-      <td>0/10</td>
-      <td><div class="mini-bar"><div style="width:0%;background:#ff5252"></div></div></td>
-      <td style="font-size:11px;color:#aaa">0% of shares protected</td>
+      <td>10/10</td>
+      <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
+      <td style="font-size:11px;color:#aaa">100% of shares protected</td>
     </tr><tr>
       <td style="font-size:12px">allocationControl</td>
       <td>10/10</td>
@@ -269,7 +290,7 @@
       <td style="font-size:12px">lossLimits</td>
       <td>10/10</td>
       <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
-      <td style="font-size:11px;color:#aaa">Daily remaining: $1270.85 | Weekly: $2868.6</td>
+      <td style="font-size:11px;color:#aaa">Daily remaining: $1434.3 | Weekly: $2868.6</td>
     </tr><tr>
       <td style="font-size:12px">completedTrades</td>
       <td>0/10</td>
