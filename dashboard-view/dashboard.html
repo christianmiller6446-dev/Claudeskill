@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="refresh" content="60">
-<title>Trading Dashboard — 2026-07-21 15:39:57 UTC</title>
+<title>Trading Dashboard — 2026-07-22 23:45:18 UTC</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;padding:20px;font-size:13px}
@@ -33,6 +33,8 @@
   .mini-bar div{height:100%;border-radius:3px}
   .warn-box{background:#1a1a00;border:1px solid #ff9800;border-radius:4px;padding:8px 12px;margin:8px 0;font-size:12px;color:#ffeb3b}
   .err-box{background:#1a0000;border:1px solid #ff5252;border-radius:4px;padding:8px 12px;margin:8px 0;font-size:12px;color:#ff5252}
+  .info-box{background:#0a1a2a;border:1px solid #1565c0;border-radius:4px;padding:8px 12px;margin:8px 0;font-size:12px;color:#90caf9}
+  .gate-fail-banner{background:#1a0000;border:1px solid #ff5252;border-radius:6px;padding:10px 14px;margin:8px 0;color:#ff5252;font-size:13px;font-weight:bold}
   .footer{margin-top:20px;color:#444;font-size:11px;border-top:1px solid #222;padding-top:8px}
   .refresh-note{color:#555;font-size:10px;margin-top:4px}
 </style>
@@ -42,15 +44,16 @@
 <h1>Trading Performance Dashboard</h1>
 <div id="updated-banner" style="background:#0d2818;border:1px solid #00e676;border-radius:6px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
   <div>
-    <div style="color:#00e676;font-size:13px;font-weight:bold" id="updated-local">Last updated: —</div>
+    <div style="color:#00e676;font-size:13px;font-weight:bold" id="updated-local">Last updated: Jul 22, 2026, 7:45 PM EDT</div>
     <div style="color:#666;font-size:11px;margin-top:2px">Paper Trading Only | Page auto-refreshes every 60s</div>
   </div>
   <div style="color:#aaa;font-size:12px" id="updated-ago">—</div>
 </div>
 <script>
-  const generatedAt = new Date("2026-07-21T15:39:57.455Z");
+  const generatedAt = new Date("2026-07-22T23:45:20.966Z");
+  // Override the server-side fallback with the browser's local format (includes correct local TZ)
   document.getElementById('updated-local').textContent =
-    'Last updated: ' + generatedAt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+    'Last updated: ' + generatedAt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short', timeZoneName: 'short' });
   function renderAgo() {
     const mins = Math.round((Date.now() - generatedAt.getTime()) / 60000);
     const el = document.getElementById('updated-ago');
@@ -66,15 +69,29 @@
 <!-- ACCOUNT OVERVIEW -->
 <h2>Account Overview</h2>
 <div class="grid">
-  <div class="card"><div class="label">Equity</div><div class="value">$49,793.31</div></div>
+  <div class="card"><div class="label">Equity</div><div class="value">$49,754.19</div></div>
   <div class="card"><div class="label">Cash</div><div class="value">$44,546.19</div></div>
-  <div class="card"><div class="label">Total Return</div><div class="value" style="color:#ff5252">-$206.69 (-0.41%)</div></div>
-  <div class="card"><div class="label">Daily P&L</div><div class="value" style="color:#ff5252">-$92.72</div></div>
-  <div class="card"><div class="label">Weekly P&L</div><div class="value" style="color:#ff5252">-$188.27</div></div>
-  <div class="card"><div class="label">Monthly P&L</div><div class="value" style="color:#ff5252">-$437.92</div></div>
-  <div class="card"><div class="label">Unrealized P&L</div><div class="value" style="color:#00e676">+$311.92</div></div>
+  <div class="card"><div class="label">Total Return</div><div class="value" style="color:#ff5252">-$245.81 (-0.49%)</div></div>
+  <div class="card"><div class="label">Daily P&L</div><div class="value" style="color:#ff5252">-$17.44</div></div>
+  <div class="card"><div class="label">Weekly P&L</div><div class="value" style="color:#ff5252">-$268.96</div></div>
+  <div class="card"><div class="label">Monthly P&L</div><div class="value" style="color:#ff5252">-$477.04</div></div>
+  <div class="card"><div class="label">Unrealized P&L</div><div class="value" style="color:#00e676">+$272.80</div></div>
   <div class="card"><div class="label">Realized P&L</div><div class="value" style="color:#ff5252">-$518.51</div></div>
 </div>
+
+<!-- P&L RECONCILIATION -->
+<h2>P&L Reconciliation</h2>
+<table style="max-width:560px">
+<tr><th>Component</th><th>Amount</th></tr>
+<tr><td>Starting equity</td><td>$50,000.00</td></tr>
+<tr><td>Deposits / withdrawals</td><td style="color:#555">$0.00 (paper account)</td></tr>
+<tr><td>Realized P&L (5 closed trades)</td><td style="color:#ff5252">-$518.51</td></tr>
+<tr><td>Unrealized P&L (open positions)</td><td style="color:#00e676">+$272.80</td></tr>
+<tr><td>Commissions / fees</td><td style="color:#555">$0.00 (paper trading)</td></tr>
+<tr style="border-top:2px solid #333"><td><b>Expected equity</b></td><td><b>$49,754.29</b></td></tr>
+<tr><td><b>Actual API equity</b></td><td><b>$49,754.19</b></td></tr>
+<tr><td>Variance</td><td style="color:#00e676">-$0.10 ✅ rounding only</td></tr>
+</table>
 
 <!-- POSITIONS -->
 <h2>Open Positions</h2>
@@ -84,9 +101,9 @@
       <td><b>AAPL</b></td>
       <td>16</td>
       <td>$308.45</td>
-      <td>$327.94</td>
-      <td>$5247.12</td>
-      <td style="color:#00e676">+$311.92 (6.32%)</td>
+      <td>$325.50</td>
+      <td>$5208.00</td>
+      <td style="color:#00e676">+$272.80 (5.53%)</td>
       <td><span style="color:#00e676">✅ $308.17</span></td>
       <td>44%</td>
     </tr>
@@ -134,6 +151,55 @@
     </tr>
 </table>
 
+<!-- GTC LADDER ORDER QUALITY -->
+
+<h2>GTC Ladder Order Quality</h2>
+<div class="warn-box">⚠️ Total max new exposure if all ladders fill simultaneously: $16937</div>
+<table>
+<tr><th>Symbol</th><th>Strategy</th><th>Qty</th><th>Order Price</th><th>Market</th><th>Distance</th><th>Age</th><th>Max Exposure</th><th>Valid?</th></tr>
+<tr>
+      <td><b>AMD</b></td>
+      <td style="color:#aaa;font-size:11px">Ladder dip-buy</td>
+      <td>20</td>
+      <td>$405.86</td>
+      <td>$552.87</td>
+      <td style="color:#ff5252">26.6% above</td>
+      <td style="color:#ff9800">36d</td>
+      <td>$8117</td>
+      <td style="color:#ff5252">❌ Stale</td>
+    </tr><tr>
+      <td><b>AMD</b></td>
+      <td style="color:#aaa;font-size:11px">Ladder dip-buy</td>
+      <td>10</td>
+      <td>$355.12</td>
+      <td>$552.87</td>
+      <td style="color:#ff5252">35.8% above</td>
+      <td style="color:#ff9800">36d</td>
+      <td>$3551</td>
+      <td style="color:#ff5252">❌ Stale</td>
+    </tr><tr>
+      <td><b>NVDA</b></td>
+      <td style="color:#aaa;font-size:11px">Ladder dip-buy</td>
+      <td>10</td>
+      <td>$160.35</td>
+      <td>$212.59</td>
+      <td style="color:#ff5252">24.6% above</td>
+      <td style="color:#ff9800">53d</td>
+      <td>$1604</td>
+      <td style="color:#ff5252">⚠️ Review</td>
+    </tr><tr>
+      <td><b>NVDA</b></td>
+      <td style="color:#aaa;font-size:11px">Ladder dip-buy</td>
+      <td>20</td>
+      <td>$183.26</td>
+      <td>$212.59</td>
+      <td style="color:#ffeb3b">13.8% above</td>
+      <td style="color:#ff9800">53d</td>
+      <td>$3665</td>
+      <td style="color:#ffeb3b">⚠️ Review</td>
+    </tr>
+</table>
+
 <!-- STRATEGY PERFORMANCE -->
 <h2>Strategy Performance</h2>
 <div class="grid">
@@ -144,7 +210,7 @@
   <div class="card"><div class="label">Avg Winner</div><div class="value green">$176.82</div></div>
   <div class="card"><div class="label">Avg Loser</div><div class="value red">-$173.83</div></div>
   <div class="card"><div class="label">Max Drawdown</div><div class="value green">1.28%</div></div>
-  <div class="card"><div class="label">Sharpe Ratio</div><div class="value">-1.99</div></div>
+  <div class="card"><div class="label">Sharpe Ratio</div><div class="value">-1.86</div></div>
   <div class="card"><div class="label">Largest Winner</div><div class="value green">$176.82</div></div>
   <div class="card"><div class="label">Largest Loser</div><div class="value red">-$310.68</div></div>
   <div class="card"><div class="label">R/R Ratio</div><div class="value">1.02:1</div></div>
@@ -157,14 +223,14 @@
   <div class="card">
     <div class="label">Daily Loss Limit</div>
     <div class="value">$1434.3</div>
-    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:6.464477445443771%;background:#ff9800"></div></div>
-    <div style="color:#888;font-size:11px">$1341.58 remaining</div>
+    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:1.2159241441818311%;background:#ff9800"></div></div>
+    <div style="color:#888;font-size:11px">$1416.86 remaining</div>
   </div>
   <div class="card">
     <div class="label">Weekly Loss Limit</div>
     <div class="value">$2868.6</div>
-    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:6.563131841316322%;background:#ff9800"></div></div>
-    <div style="color:#888;font-size:11px">$2680.33 remaining</div>
+    <div class="progress" style="margin-top:6px"><div class="progress-fill" style="width:9.376002231053475%;background:#ff9800"></div></div>
+    <div style="color:#888;font-size:11px">$2599.64 remaining</div>
   </div>
   <div class="card">
     <div class="label">Stop Coverage</div>
@@ -180,40 +246,105 @@
 
 <div style="margin:6px 0">
   <span style="color:#aaa;font-size:12px">AAPL allocation: </span>
-  <span style="color:#00e676">11% ($5247.12) / 25% cap</span>
-  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:11%;background:#00e676"></div></div>
+  <span style="color:#00e676">10.9% ($5208) / 25% cap</span>
+  <div class="progress" style="margin-top:3px;max-width:300px"><div class="progress-fill" style="width:10.9%;background:#00e676"></div></div>
 </div>
 
 
 <!-- AUTOMATION HEALTH -->
 <h2>Automation Health</h2>
-<div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
-<table style="max-width:400px">
-<tr><th>Task</th><th>Status</th></tr>
-<tr><td>nvda-ladder-fill-watcher</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-loss-guardian</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-morning-check</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-midday-check</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-preclose-check</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>nvda-nightly-report</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>weekly-stock-scan</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>monday-watchlist</td><td><span style="color:#00e676">✅</span></td></tr><tr><td>weekend-bot-update</td><td><span style="color:#00e676">✅</span></td></tr>
+
+<h3>Windows Task Scheduler — always-on</h3>
+<table>
+<tr><th>Task</th><th>Type</th><th>Last Run</th><th>Result</th><th>Missed</th><th>Next Run</th></tr>
+<tr>
+      <td>Dashboard (9:00 AM)</td>
+      <td style="color:#888;font-size:11px">Windows Scheduler</td>
+      <td>Jul 22 7:45 PM</td>
+      <td style="color:#ff5252">⚠️ Still running</td>
+      <td style="color:#aaa">0</td>
+      <td>Jul 23 9:00 AM</td>
+    </tr><tr>
+      <td>Auto-Trade (9:45 AM)</td>
+      <td style="color:#888;font-size:11px">Windows Scheduler</td>
+      <td>Jul 22 7:45 PM</td>
+      <td style="color:#00e676">✅ Success</td>
+      <td style="color:#aaa">0</td>
+      <td>Jul 23 9:45 AM</td>
+    </tr>
 </table>
-<div>
-  <div class="card" style="min-width:200px">
-    <div class="label">Scheduler Health</div>
-    <div class="value green">100/100</div>
-  </div>
-  <div style="margin-top:8px;font-size:12px;color:#888">API Errors Today: <span style="color:#00e676">0</span></div>
-  <div style="font-size:12px;color:#888">Last Scan: none</div>
-  
+
+<h3>Claude Scheduled Tasks — require app open</h3>
+<table>
+<tr><th>Task</th><th>Type</th><th colspan="3">Execution</th><th>Registered</th></tr>
+<tr>
+      <td>nvda-ladder-fill-watcher </td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr><tr>
+      <td>nvda-loss-guardian <span style="color:#ff9800;font-size:10px">NVDA+AMD only</span></td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr><tr>
+      <td>nvda-morning-check <span style="color:#ff9800;font-size:10px">NVDA+AMD only</span></td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr><tr>
+      <td>nvda-midday-check <span style="color:#ff9800;font-size:10px">NVDA+AMD only</span></td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr><tr>
+      <td>nvda-preclose-check <span style="color:#ff9800;font-size:10px">NVDA+AMD only</span></td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr><tr>
+      <td>nvda-nightly-report <span style="color:#ff9800;font-size:10px">NVDA+AMD only</span></td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr><tr>
+      <td>weekly-stock-scan </td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr><tr>
+      <td>monday-watchlist </td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr><tr>
+      <td>weekend-bot-update </td>
+      <td style="color:#888;font-size:11px">Claude (app-dependent)</td>
+      <td colspan="3" style="color:#555;font-size:11px">No execution timestamp (requires Claude Code app open)</td>
+      <td><span style="color:#00e676">✅ Registered</span></td>
+    </tr>
+</table>
+
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px">
+  <div style="font-size:12px;color:#888">API Errors Today: <span style="color:#00e676">0</span></div>
+  <div style="font-size:12px;color:#888">Last Auto-Trade Scan: <span style="color:#aaa">Jul 21 11:39 AM</span></div>
+  <div style="font-size:12px;color:#888">Last Claude Scan: <span style="color:#aaa">Jul 4 5:26 PM</span></div>
 </div>
-</div>
+<div class="err-box" style="margin-top:6px">🚨 ClaudeTradingDashboard last run failed (exit 267009)</div>
+<div class="info-box" style="margin-top:6px">ℹ️ nvda-morning-check monitors NVDA+AMD only — does not cover AAPL or new positions (pending rename approval)</div>
 
 <!-- READINESS SCORE -->
 <h2>Live Trading Readiness</h2>
+<div class="gate-fail-banner">⛔ Score capped at 59 — 5 of 7 go-live gates not met. Infrastructure and Risk scores cannot override strategy performance.</div>
 <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start">
 <div class="score-ring">
   <div>
-    <div class="score-num" style="color:#ffeb3b">75</div>
+    <div class="score-num" style="color:#ff5252">59</div>
     <div style="color:#555">/ 100</div>
   </div>
   <div>
-    <div class="score-label" style="color:#ffeb3b">Controlled Live Test Eligible</div>
-    <div class="progress" style="width:200px;margin-top:8px"><div class="progress-fill" style="width:75%;background:#ffeb3b"></div></div>
+    <div class="score-label" style="color:#ff5252">Paper Testing — Not Live Ready</div>
+    <div class="progress" style="width:200px;margin-top:8px"><div class="progress-fill" style="width:59%;background:#ff5252"></div></div>
     <div style="font-size:11px;color:#555;margin-top:4px">Infra: 30/30 | Risk: 30/30 | Strategy: 15/40</div>
   </div>
 </div>
@@ -233,7 +364,7 @@
       <td style="font-size:12px">logging</td>
       <td>10/10</td>
       <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
-      <td style="font-size:11px;color:#aaa">20 days of portfolio history</td>
+      <td style="font-size:11px;color:#aaa">21 days of portfolio history</td>
     </tr><tr>
       <td style="font-size:12px">stopCoverage</td>
       <td>10/10</td>
@@ -248,7 +379,7 @@
       <td style="font-size:12px">lossLimits</td>
       <td>10/10</td>
       <td><div class="mini-bar"><div style="width:100%;background:#00e676"></div></div></td>
-      <td style="font-size:11px;color:#aaa">Daily remaining: $1341.58 | Weekly: $2680.33</td>
+      <td style="font-size:11px;color:#aaa">Daily remaining: $1416.86 | Weekly: $2599.64</td>
     </tr><tr>
       <td style="font-size:12px">completedTrades</td>
       <td>5/10</td>
@@ -272,6 +403,46 @@
     </tr>
 </table>
 </div>
+
+<h3>Hard Go-Live Gates</h3>
+<table style="max-width:600px">
+<tr><th>Gate</th><th>Current</th><th>Required</th></tr>
+<tr>
+    <td style="font-size:12px">❌ Min 50 completed trades</td>
+    <td style="color:#ff5252;font-size:12px">5 trades</td>
+    <td style="color:#888;font-size:11px">Need ≥ 50</td>
+  </tr><tr>
+    <td style="font-size:12px">❌ Min 45 trading days</td>
+    <td style="color:#ff5252;font-size:12px">21 days</td>
+    <td style="color:#888;font-size:11px">Need ≥ 45</td>
+  </tr><tr>
+    <td style="font-size:12px">❌ Profit factor ≥ 1.30</td>
+    <td style="color:#ff5252;font-size:12px">0.25</td>
+    <td style="color:#888;font-size:11px">Need ≥ 1.30</td>
+  </tr><tr>
+    <td style="font-size:12px">❌ Positive expectancy</td>
+    <td style="color:#ff5252;font-size:12px">$-103.7/trade</td>
+    <td style="color:#888;font-size:11px">Need > $0</td>
+  </tr><tr>
+    <td style="font-size:12px">✅ Max drawdown < 10%</td>
+    <td style="color:#00e676;font-size:12px">1.28%</td>
+    <td style="color:#888;font-size:11px">Need < 10%</td>
+  </tr><tr>
+    <td style="font-size:12px">✅ No missed stop protection</td>
+    <td style="color:#00e676;font-size:12px">100% covered</td>
+    <td style="color:#888;font-size:11px">Need 100%</td>
+  </tr><tr>
+    <td style="font-size:12px">❌ 4 consecutive profitable weeks</td>
+    <td style="color:#ff5252;font-size:12px">0 weeks streak</td>
+    <td style="color:#888;font-size:11px">Need ≥ 4</td>
+  </tr>
+</table>
+
+<h3>Weekly P&L History (last 8 weeks)</h3>
+<table style="max-width:300px">
+<tr><th>Week of</th><th>P&L</th></tr>
+<tr><td style="color:#888;font-size:11px">2026-06-30</td><td style="color:#00e676">+$0.00</td></tr><tr><td style="color:#888;font-size:11px">2026-07-07</td><td style="color:#00e676">+$581.00</td></tr><tr><td style="color:#888;font-size:11px">2026-07-14</td><td style="color:#ff5252">-$310.27</td></tr><tr><td style="color:#888;font-size:11px">2026-07-21</td><td style="color:#ff5252">-$96.00</td></tr>
+</table>
 
 <div class="footer">
   ⛔ PAPER TRADING ONLY — No orders placed by this dashboard. All trades require user approval.
